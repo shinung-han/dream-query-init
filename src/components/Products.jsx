@@ -11,15 +11,15 @@ export default function Products() {
     error,
     data: products,
   } = useQuery(
-    ['product', checked],
+    ['products', checked],
     () => {
-      console.log('fetching...');
+      console.log('fetching...', checked);
       return fetch(`data/${checked ? 'sale_' : ''}products.json`).then((res) =>
         res.json()
       );
     },
     {
-      staleTime: 5000,
+      staleTime: 1000 * 60 * 5,
     }
   );
 
@@ -35,7 +35,7 @@ export default function Products() {
       </label>
       <ul>
         {products.map((product) => (
-          <li key={Number(product.id)}>
+          <li key={product.id}>
             <article>
               <h3>{product.name}</h3>
               <p>{product.price}</p>
